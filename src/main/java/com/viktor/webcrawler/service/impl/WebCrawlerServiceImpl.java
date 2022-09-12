@@ -115,7 +115,8 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         return persistedHost;
     }
 
-    private List<PageDto> getDomainPages(Long hostId) {
+    @Override
+    public List<PageDto> getDomainPages(Long hostId) {
         return pageMapper.toListDto(pageRepository.findAllPageByHostId(hostId));
     }
 

@@ -6,6 +6,6 @@ import java.util.List;
 public interface WebCrawlerService {
 
     List<PageDto> getDomainInfo(String domainUrl);
-
+    List<PageDto> getDomainPages(Long hostId);
     void deleteDomain(Long id);
 }

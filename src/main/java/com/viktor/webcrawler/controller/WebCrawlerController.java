@@ -22,9 +22,15 @@ public class WebCrawlerController {
     private final WebCrawlerService webCrawler;
 
     @GetMapping()
-    public ResponseEntity<List<PageDto>> getHostPages(@RequestParam String domainUrl) {
+    public ResponseEntity<List<PageDto>> getHostInfo(@RequestParam String domainUrl) {
         List<PageDto> domainPages = webCrawler.getDomainInfo(domainUrl);
         return new ResponseEntity<>(domainPages, HttpStatus.OK);
+    }
+
+    @GetMapping("/pages/{hostId}")
+    public ResponseEntity<List<PageDto>> getHostPages(@PathVariable Long hostId) {
+        List<PageDto> pages = webCrawler.getDomainPages(hostId);
+        return new ResponseEntity<>(pages, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
