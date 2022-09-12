@@ -7,7 +7,7 @@ and their depth level according to host url.
 ## Installation
 
 Clone repository.
-Connect to database using application.properties file
+Connect to database using application.properties file.
 Run project
 
 ## Test
