@@ -17,5 +17,5 @@ public class PageDto {
 
     private int externalLinks;
 
-    private HostDto hostDto;
+    private HostDto host;
 }

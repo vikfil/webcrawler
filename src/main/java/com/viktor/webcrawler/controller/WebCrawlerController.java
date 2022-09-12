@@ -22,18 +22,9 @@ public class WebCrawlerController {
     private final WebCrawlerService webCrawler;
 
     @GetMapping()
-    public ResponseEntity<HttpStatus> parseDomain(@RequestParam String domainUrl) {
-        long begin = System.currentTimeMillis();
-        webCrawler.saveDomainInfo(domainUrl);
-        long finish = System.currentTimeMillis();
-        System.out.println("Total: " + (finish - begin));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/pages")
-    public ResponseEntity<List<PageDto>> getAllPages() {
-        List<PageDto> pages = webCrawler.getDomainPages();
-        return new ResponseEntity<>(pages, HttpStatus.OK);
+    public ResponseEntity<List<PageDto>> getHostPages(@RequestParam String domainUrl) {
+        List<PageDto> domainPages = webCrawler.getDomainInfo(domainUrl);
+        return new ResponseEntity<>(domainPages, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

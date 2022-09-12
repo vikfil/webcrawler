@@ -30,14 +30,19 @@ import java.util.stream.Collectors;
 public class WebCrawlerServiceImpl implements WebCrawlerService {
 
     private final PageRepository pageRepository;
+
     private final HostRepository hostRepository;
+
     private final PageMapper pageMapper;
+
     private Set<String> visitedLinks = new HashSet<>();
-    int domainExternalLinks = 0;
+
+    private int domainExternalLinks = 0;
+
     private List<Page> internalPages = new ArrayList<>();
 
     @Override
-    public void saveDomainInfo(String domainUrl) {
+    public List<PageDto> getDomainInfo(String domainUrl) {
         int clickLevel = 1;
         Queue<List<String>> queue = new LinkedList<>();
         queue.offer(Collections.singletonList(domainUrl));
@@ -55,8 +60,8 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
             }
             clickLevel++;
         }
-        Host host = new Host(domainUrl,domainExternalLinks,internalPages.size());
-        persistHost(host, internalPages);
+        Host host = persistHost(new Host(domainUrl,domainExternalLinks,internalPages.size()), internalPages);
+        return getDomainPages(host.getId());
     }
 
     private List<String> traverse(String url, String domainUrl, int clickLevel) {
@@ -101,17 +106,17 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
                 .collect(Collectors.toList());
     }
 
-    private void persistHost(Host host, List<Page> domainPages) {
+    private Host persistHost(Host host, List<Page> domainPages) {
         for (Page page : domainPages) {
             host.addPage(page);
         }
-        hostRepository.save(host);
+        Host persistedHost = hostRepository.save(host);
         clearInternalState();
+        return persistedHost;
     }
 
-    @Override
-    public List<PageDto> getDomainPages() {
-        return pageMapper.toListDto(pageRepository.findAll());
+    private List<PageDto> getDomainPages(Long hostId) {
+        return pageMapper.toListDto(pageRepository.findAllPageByHostId(hostId));
     }
 
     @Override

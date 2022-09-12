@@ -1,9 +1,8 @@
 package com.viktor.webcrawler.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -41,7 +40,6 @@ public class Host {
             orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
     )
-    @JsonIgnore
     private List<Page> pages = new ArrayList<>();
 
     public Host(String domainUrl, int outerLinks, int numberOfPages) {
