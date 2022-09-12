@@ -15,10 +15,10 @@ Run project
 URLs for test endpoints:
 
 - Parse domain url and show info.
-  Get method http://localhost:8080/domain?domainUrl=<domainUrl>
+  Get method http://localhost:8080/domain?domainUrl="domainUrl"
 
 - Get pages from database for specific domain.
-  Get method http://localhost:8080/domain/pages/<domainId>
+  Get method http://localhost:8080/domain/pages/"domainId"
 
 - Delete domain and its pages from database.
-  Delete method http://localhost:8080/domain/<domainId>
+  Delete method http://localhost:8080/domain/"domainId"
